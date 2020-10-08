@@ -1,0 +1,8 @@
+{
+    "VERSION": "0.0.0",
+    "MODE": "DEFAULT",
+    "ENABLE_LOG": true,
+    "ON_DEBUG": true,
+    "ENABLE_PHYSICS_DEBUG": false,
+    "BASE_ASSET_URL": ""
+}

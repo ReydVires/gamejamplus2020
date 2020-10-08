@@ -1,0 +1,30 @@
+{
+  "name": "phaser-3-webpack-template",
+  "version": "0.5.2",
+  "description": "Experiment using Webpack for Phaser 3",
+  "main": "src/index.js",
+  "author": "ReydVires",
+  "scripts": {
+    "dev": "webpack-dev-server --host --open --env.build=game-dev",
+    "stag": "npm run clean & npm run build:stag && webpack-dev-server --host --open --env.build=game-stag",
+    "prod": "npm run clean & npm run build:prod && webpack-dev-server --host --open --env.build=game-prod",
+    "build:dev": "webpack --mode production --env.build=game-dev",
+    "build:stag": "webpack --mode production --env.build=game-stag",
+    "build:prod": "webpack --mode production --env.build=game-prod",
+    "dist": "http-server ./dist -p 5051 -e -o -c120",
+    "clean": "rmdir /Q /S dist"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.0.4",
+    "css-loader": "^3.6.0",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-obfuscator": "^1.1.0"
+  },
+  "dependencies": {
+    "phaser": "^3.24.1"
+  }
+}
