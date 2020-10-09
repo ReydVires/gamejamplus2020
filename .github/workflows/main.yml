@@ -21,7 +21,6 @@ jobs:
         run: |
           npm install
           npm run build:stag
-          npm cache clean; npm cache verify
 
       - uses: actions/upload-artifact@v2
         with:
