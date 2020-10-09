@@ -38,5 +38,6 @@ jobs:
           run: |
             npm install -g firebase-tools
             cd firebase_hosting
+            firebase -V
             firebase use --token ${{secrets.FIREBASE_TOKEN}} staging
             firebase deploy --token ${{secrets.FIREBASE_TOKEN}}
