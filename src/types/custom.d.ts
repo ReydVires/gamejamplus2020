@@ -52,6 +52,16 @@ export declare namespace CustomTypes {
 
     }
 
-    namespace Gameplay {}
+    namespace Gameplay {
+
+        namespace GameData {
+
+            type Coordinate = {
+                [x: string]: CustomTypes.General.KeyValuePair<string, Phaser.Geom.Point>[]
+            }
+
+        }
+
+    }
 
 }

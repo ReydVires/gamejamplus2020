@@ -16,8 +16,9 @@ export const FontListKey = {
 	ARIAL: "Arial",
 };
 
-export const enum GameEnum {
-	LOREM,
-	IPSUM,
-	DOLOR
+export const enum GameState {
+	PREPARING,
+	PLAYING,
+	PAUSE,
+	GAMEOVER
 }
