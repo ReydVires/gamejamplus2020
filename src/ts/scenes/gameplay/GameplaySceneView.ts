@@ -25,23 +25,17 @@ export class GameplaySceneView implements BaseView {
 	create (): void {
 		const { centerX, centerY, width, height, ratio, screenPercentage } = this.screenUtility;
 
-		const testSprite = new Image(this._scene, centerX, centerY * 0.5, Assets.phaser_logo.key);
-		testSprite.transform.setMinPreferredDisplaySize(width * 0.3, height * 0.3);
-
 		const restartBtn = new Button(this._scene, centerX, centerY * 1.2, "Restart", {
 			color: 'black',
 			fontFamily: FontListKey.ROBOTO,
 		});
-		restartBtn.transform.setToScaleDisplaySize(testSprite.transform.displayToOriginalHeightRatio * 1.5);
+		restartBtn.transform.setToScaleDisplaySize(screenPercentage * 1.5);
 		restartBtn.labelText.gameObject.setFontSize(32 * restartBtn.transform.displayToOriginalHeightRatio);
 		restartBtn.click.once(() => {
 			this.event.emit(this.eventName.onClickSFX);
 			const scene = this._scene.scene;
 			scene.start(SceneListKey.TITLE);
 		});
-
-		const otherSprite = new Image(this._scene, centerX, centerY * 0.6, Assets.phaser_logo.key);
-		otherSprite.transform.setToScreenPercentage(0.2 / ratio);
 
 		this.event.emit(this.eventName.onCreateFinish);
 	}
