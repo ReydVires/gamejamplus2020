@@ -16,6 +16,17 @@ export const FontListKey = {
 	ARIAL: "Arial",
 };
 
+export const ToolsListKey = {
+	LADDER: "Ladder",
+	PLANK: "Plank",
+};
+
+export const ObstaclesListKey = {
+	BOOK_A: "Book-A",
+	WATCH: "Watch",
+	WALL: "Wall",
+};
+
 export const enum GameState {
 	PREPARING,
 	PLAYING,
