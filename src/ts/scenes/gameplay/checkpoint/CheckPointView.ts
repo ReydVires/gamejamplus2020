@@ -16,7 +16,7 @@ export class CheckPointView implements BaseView {
 	eventName: typeof EventNames;
 
 	private _displayPercentage: number;
-	private _checkpoints: CustomTypes.Gameplay.GameData.Coordinate;
+	private _checkpoints: CustomTypes.Gameplay.GameData.CheckpointData;
 	private _sprites: Sprite[];
 
 	constructor (private _scene: Phaser.Scene) {
@@ -25,7 +25,7 @@ export class CheckPointView implements BaseView {
 		this.eventName = EventNames;
 	}
 
-	create (displayPercentage: number, checkpoints: CustomTypes.Gameplay.GameData.Coordinate): void {
+	create (displayPercentage: number, checkpoints: CustomTypes.Gameplay.GameData.CheckpointData): void {
 		this._displayPercentage = displayPercentage;
 		this._checkpoints = checkpoints;
 		this.createCheckpoints();
@@ -40,7 +40,7 @@ export class CheckPointView implements BaseView {
 			const points = this._checkpoints[key];
 			for (let i = 0; i < points.length; i++) {
 				const point = points[i]?.value;
-				const sprite = new Sprite(this._scene, this.screenUtility.centerX * point.x, this.screenUtility.centerY * point.y, Assets.checkpoint.key, 0);
+				const sprite = new Sprite(this._scene, this.screenUtility.width * point.x, this.screenUtility.height * point.y, Assets.checkpoint.key, 0);
 				sprite.transform.setToScaleDisplaySize(this._displayPercentage);
 				this.setInteractive(sprite.gameObject, i, points[i].key);
 				this._sprites.push(sprite);

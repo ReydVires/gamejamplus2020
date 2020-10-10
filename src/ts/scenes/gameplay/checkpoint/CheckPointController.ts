@@ -11,7 +11,7 @@ export class CheckPointController {
 		this._view = new CheckPointView(scene);
 	}
 
-	init (displayPercentage: number, checkpoints: CustomTypes.Gameplay.GameData.Coordinate): void {
+	init (displayPercentage: number, checkpoints: CustomTypes.Gameplay.GameData.CheckpointData): void {
 		this._view.create(displayPercentage, checkpoints);
 	}
 
