@@ -20,7 +20,7 @@ export class LoadingSceneController extends BaseSceneController {
 		this.gameplayLoaderController = new GameplayLoaderController(this);
 	}
 
-	create(): void {}
+	create (): void {}
 
 	preload (): void {
 		this.loadBootResources();
