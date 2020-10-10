@@ -25,9 +25,15 @@ export class GameplaySceneView implements BaseView {
 	create (): void {
 		const { centerX, centerY, width, height, ratio, screenPercentage } = this.screenUtility;
 
-		const restartBtn = new Button(this._scene, centerX, centerY * 1.2, "Restart", {
+		const restartStyleBtn: Phaser.Types.GameObjects.Text.TextStyle = {
 			color: 'black',
 			fontFamily: FontListKey.ROBOTO,
+		};
+		const restartBtn = new Button(this._scene, this.screenUtility.width * 0.875, 64 * screenPercentage, "Restart", restartStyleBtn, {
+			fill: 0x95a5a6,
+			alpha: 1,
+			height: 64,
+			width: 150
 		});
 		restartBtn.transform.setToScaleDisplaySize(screenPercentage * 1.5);
 		restartBtn.labelText.gameObject.setFontSize(32 * restartBtn.transform.displayToOriginalHeightRatio);
