@@ -1,10 +1,10 @@
 import { CustomTypes } from "../../../../types/custom";
-import { Assets } from "../../../library/AssetGameplay";
 import { BaseView } from "../../../modules/core/BaseView";
 import { Image } from "../../../modules/gameobjects/Image";
 import { ScreenUtilController } from "../../../modules/screenutility/ScreenUtilController";
 
 const EventNames = {
+	onClick: "onClick",
 	onCreateFinish: "onCreateFinish",
 };
 
@@ -14,7 +14,9 @@ export class ObstacleView implements BaseView {
 	screenUtility: ScreenUtilController;
 	eventName: typeof EventNames;
 
-	private _sprite: Image;
+	private _displayPercentage: number;
+	private _obstacles: CustomTypes.Gameplay.GameData.ObstacleData;
+	private _sprites: Image[];
 
 	constructor (private _scene: Phaser.Scene) {
 		this.event = new Phaser.Events.EventEmitter();
@@ -22,10 +24,42 @@ export class ObstacleView implements BaseView {
 		this.eventName = EventNames;
 	}
 
-	create (displayPercentage: number, obstacles: CustomTypes.Gameplay.GameData.Coordinate): void {
-		this._sprite = new Image(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.obstacle_a.key);
-		this._sprite.transform.setToScaleDisplaySize(displayPercentage);
-		console.log("obstacles::", obstacles);
+	create (displayPercentage: number, obstacles: CustomTypes.Gameplay.GameData.ObstacleData): void {
+		this._displayPercentage = displayPercentage;
+		this._obstacles = obstacles;
+		this.createObstacles();
+
+		this.event.emit(this.eventName.onCreateFinish);
+	}
+
+	private createObstacles (): void {
+		this._sprites = [];
+		for (const key in this._obstacles) {
+			if (!Reflect.has(this._obstacles, key)) continue;
+			const obstacles = this._obstacles[key];
+			for (let i = obstacles.length-1; i >= 0; i--) {
+				const obstacle = obstacles[i];
+				const point = obstacle.position;
+				const sprite = new Image(this._scene, this.screenUtility.width * point.x, this.screenUtility.height * point.y, obstacle.texture);
+				sprite.transform.setToScaleDisplaySize(this._displayPercentage);
+				this.setInteractive(sprite.gameObject, obstacle.id);
+				this._sprites.push(sprite);
+			}
+		}
+	}
+
+	private setInteractive (gameObject: Phaser.GameObjects.Image, id: string): void {
+		gameObject.setInteractive({ useHandCursor: true })
+		.on('pointerup', () => this._scene.tweens.add({
+			targets: gameObject,
+			props: {
+				alpha: { getStart: () => 0.65, getEnd: () => 1 },
+			},
+			duration: 150,
+			onComplete: () => {
+				this.event.emit(this.eventName.onClick, id);
+			}
+		}));
 	}
 
 }
