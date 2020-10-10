@@ -14,8 +14,8 @@ export class GameController {
 	eventName: typeof EventNames;
 	private _gameState: GameState;
 
-	private _checkpoints: CustomTypes.Gameplay.GameData.Coordinate;
-	private _obstacles: CustomTypes.Gameplay.GameData.Coordinate;
+	private _checkpoints: CustomTypes.Gameplay.GameData.CheckpointData;
+	private _obstacles: CustomTypes.Gameplay.GameData.ObstacleData;
 
 	constructor (private _scene: Phaser.Scene) {
 		this.event = new Phaser.Events.EventEmitter();
@@ -33,11 +33,11 @@ export class GameController {
 		return this._gameState;
 	}
 
-	get checkpoints (): CustomTypes.Gameplay.GameData.Coordinate {
+	get checkpoints (): CustomTypes.Gameplay.GameData.CheckpointData {
 		return this._checkpoints;
 	}
 
-	get obstacles (): CustomTypes.Gameplay.GameData.Coordinate {
+	get obstacles (): CustomTypes.Gameplay.GameData.ObstacleData {
 		return this._obstacles;
 	}
 

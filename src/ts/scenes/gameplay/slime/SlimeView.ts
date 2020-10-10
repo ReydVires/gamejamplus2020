@@ -21,7 +21,8 @@ export class SlimeView implements BaseView {
 	}
 
 	create (displayPercentage: number): void {
-		this._sprite = new Sprite(this._scene, this.screenUtility.centerX, this.screenUtility.height * 0.8, Assets.slime_char.key, 0);
+		this._sprite = new Sprite(this._scene, this.screenUtility.centerX, this.screenUtility.height * 0.95, Assets.slime_char.key, 0);
+		this._sprite.gameObject.setOrigin(0.5, 1);
 		this._sprite.transform.setToScaleDisplaySize(displayPercentage);
 
 		this.event.emit(this.eventName.onCreateFinish);
