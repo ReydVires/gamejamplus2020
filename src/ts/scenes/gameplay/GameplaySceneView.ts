@@ -6,7 +6,7 @@ import { Rectangle } from "../../modules/gameobjects/Rectangle";
 import { ToolView } from "./tool/ToolView";
 
 const EventNames = {
-	onClickSFX: "onClickSFX",
+	onSFXClick: "onSFXClick",
 	onCreateFinish: "onCreateFinish",
 };
 
@@ -41,7 +41,7 @@ export class GameplaySceneView implements BaseView {
 		restartBtn.transform.setToScaleDisplaySize(displayPercentage * 1.5);
 		restartBtn.labelText.gameObject.setFontSize(32 * restartBtn.transform.displayToOriginalHeightRatio);
 		restartBtn.click.once(() => {
-			this.event.emit(this.eventName.onClickSFX);
+			this.event.emit(this.eventName.onSFXClick);
 			const scene = this._scene.scene;
 			scene.start(SceneListKey.TITLE);
 		});

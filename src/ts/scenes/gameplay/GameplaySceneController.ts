@@ -61,7 +61,7 @@ export class GameplaySceneController extends BaseSceneController {
 		);
 		this.slimeController.init(this.backgroundController.getDisplayPercentage());
 
-		this.onClickSFX(() => this.audioController.playSFX(Audio.sfx_click.key));
+		this.onSFXClick(() => this.audioController.playSFX(Audio.sfx_click.key));
 		this.onCreateFinish(() => {
 			this.onClickTool((name, cost) => {
 				console.log("onClickTool::", name, cost);
@@ -81,8 +81,8 @@ export class GameplaySceneController extends BaseSceneController {
 		this.view.tool.event.on(this.view.tool.eventName.onClickTool, events);
 	}
 
-	onClickSFX (events: Function): void {
-		this.view.event.on(this.view.eventName.onClickSFX, events);
+	onSFXClick (events: Function): void {
+		this.view.event.on(this.view.eventName.onSFXClick, events);
 	}
 
 	onCreateFinish (events: Function): void {
