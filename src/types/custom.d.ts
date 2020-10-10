@@ -56,8 +56,27 @@ export declare namespace CustomTypes {
 
         namespace GameData {
 
-            type Coordinate = {
-                [x: string]: CustomTypes.General.KeyValuePair<string, Phaser.Geom.Point>[]
+            type CheckpointInfo = CustomTypes.General.KeyValuePair<string, Phaser.Geom.Point>;
+
+            type CheckpointData = {
+                [x: string]: CheckpointInfo[]
+            }
+
+            type ObstacleInfo = {
+                id: string,
+                texture: string,
+                position: Phaser.Geom.Point,
+                tools: ToolInfo[]
+            }
+
+            type ObstacleData = {
+                [x: string]: ObstacleInfo[]
+            }
+
+            type ToolInfo = {
+                name: string,
+                cost: number,
+                texture: string
             }
 
         }
