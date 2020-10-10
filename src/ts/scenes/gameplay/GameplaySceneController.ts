@@ -9,6 +9,8 @@ import { CheckPointController } from "./checkpoint/CheckPointController";
 import { GameController } from "./game/GameController";
 import { ObstacleController } from "./obstacle/ObstacleController";
 
+const OnClickTool = (name: string, cost: number) => {};
+
 export class GameplaySceneController extends BaseSceneController {
 
 	view: GameplaySceneView;
@@ -32,8 +34,19 @@ export class GameplaySceneController extends BaseSceneController {
 		this.checkPointController = new CheckPointController(this);
 		this.slimeController = new SlimeController(this);
 
+		this.obstacleController.onClick((id) => {
+			console.log("obstacleController::", id);
+			const obstaclesData = this.gameController.obstacles;
+			for (const key in obstaclesData) {
+				if (!Reflect.has(obstaclesData, key)) continue;
+				const obstacles = obstaclesData[key];
+				const obstacle = obstacles.find((val) => val.id === id);
+				this.view.tool.showToolsGUI(obstacle?.tools);
+				break;
+			}
+		});
 		this.checkPointController.onClick((index, id) => {
-			console.log("Index::", index, id);
+			console.log("checkPointController::", index, id);
 		});
 
 		this.gameController.init();
@@ -49,23 +62,31 @@ export class GameplaySceneController extends BaseSceneController {
 		this.slimeController.init(this.backgroundController.getDisplayPercentage());
 
 		this.onClickSFX(() => this.audioController.playSFX(Audio.sfx_click.key));
-		this.onCreateFinish(() => {});
+		this.onCreateFinish(() => {
+			this.onClickTool((name, cost) => {
+				console.log("onClickTool::", name, cost);
+			});
+		});
 	}
 
 	create (): void {
-		this.view.create();
+		this.view.create(this.backgroundController.getDisplayPercentage());
 	}
 
 	update (time: number, dt: number): void {
 		this.view.update(time, dt);
 	}
 
-	onClickSFX (event: Function): void {
-		this.view.event.on(this.view.eventName.onClickSFX, event);
+	onClickTool (events: typeof OnClickTool): void {
+		this.view.tool.event.on(this.view.tool.eventName.onClickTool, events);
 	}
 
-	onCreateFinish (event: Function): void {
-		this.view.event.once(this.view.eventName.onCreateFinish, event);
+	onClickSFX (events: Function): void {
+		this.view.event.on(this.view.eventName.onClickSFX, events);
+	}
+
+	onCreateFinish (events: Function): void {
+		this.view.event.once(this.view.eventName.onCreateFinish, events);
 	}
 
 }
