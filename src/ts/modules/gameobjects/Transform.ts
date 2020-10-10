@@ -2,9 +2,9 @@ import { ScreenUtilController } from "../screenutility/ScreenUtilController";
 
 export class Transform {
 
-	private _gameObject: Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Text;
+	private _gameObject: Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Text | Phaser.GameObjects.Rectangle;
 
-	constructor (private _scene: Phaser.Scene, gameObject: Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Text) {
+	constructor (private _scene: Phaser.Scene, gameObject: Phaser.GameObjects.Sprite | Phaser.GameObjects.Image | Phaser.GameObjects.Text | Phaser.GameObjects.Rectangle) {
 		this._gameObject = gameObject;
 	}
 
