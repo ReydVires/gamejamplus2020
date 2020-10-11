@@ -5,6 +5,7 @@ import { Assets } from "../../library/AssetLoading";
 import { AnimationHelper } from "../../helper/AnimationHelper";
 import { Animations } from "../../library/AssetAnimation";
 import { Sprite } from "../../modules/gameobjects/Sprite";
+import { FontListKey } from "../../info/GameInfo";
 
 export class LoadingSceneView implements BaseView {
 
@@ -22,16 +23,20 @@ export class LoadingSceneView implements BaseView {
 		const bg = new Sprite(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.bg_loading.key);
 		bg.transform.setMinPreferredDisplaySize(this.screenUtility.width, this.screenUtility.height);
 
+		const mascot = new Sprite(this._scene, this.screenUtility.centerX, this.screenUtility.centerY * 0.65, Assets.slime_loading.key);
+		mascot.transform.setToScaleDisplaySize(bg.transform.displayToOriginalHeightRatio * 0.85);
+
 		const frame = new Sprite(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.loading_frame.key);
 		frame.transform.setMaxPreferredDisplaySize(this.screenUtility.width, this.screenUtility.height);
 		frame.gameObject.setOrigin(0.5)
 			.setDepth(1)
 			.setAlpha(1);
 
+		const loadingPosTextAnim = frame.transform.getDisplayPositionFromCoordinate(0.5, 0.3);
 		const loadingTextAnim = new Sprite(this._scene, 0, 0, Assets.loading_text.key);
 		loadingTextAnim.transform.setToScaleDisplaySize(frame.transform.displayToOriginalWidthRatio);
 		loadingTextAnim.gameObject.setOrigin(0.5, 1)
-			.setPosition(frame.transform.getDisplayPositionFromCoordinate(0.5, 0).x, frame.transform.getDisplayPositionFromCoordinate(0.5, 0).y);
+			.setPosition(loadingPosTextAnim.x, loadingPosTextAnim.y);
 
 		AnimationHelper.AddAnimation(this._scene, Animations.loading_text);
 		loadingTextAnim.gameObject.play(Animations.loading_text.key);
@@ -42,10 +47,12 @@ export class LoadingSceneView implements BaseView {
 			.setDepth(2)
 			.setAlpha(1);
 
-		this._progressText = new Text(this._scene, frame.gameObject.x, frame.gameObject.y + (100 * this.screenUtility.screenPercentage), '0%', { color: '#ffd561', fontStyle: 'bold', align: 'center' });
+		this._progressText = new Text(this._scene, frame.gameObject.x, frame.gameObject.y, '0%', {
+			color: '#ffd561', fontStyle: 'bold', align: 'center', fontFamily: FontListKey.ROBOTO
+		});
 		this._progressText.gameObject
-			.setOrigin(0.5, 0)
-			.setFontSize(35 * this.screenUtility.screenPercentage);
+			.setOrigin(0.5, 0.55).setDepth(20)
+			.setFontSize(38 * this._bar.transform.displayToOriginalHeightRatio);
 
 		this._progressBar = this._scene.add.graphics();
 		this._progressBar.setVisible(false);
