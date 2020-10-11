@@ -12,4 +12,8 @@ export class SlimeController {
 		this._view.create(displayPercentage);
 	}
 
+	setPosition (x: number, y: number): void {
+		this._view.sprite.gameObject.setPosition(x, y);
+	}
+
 }
