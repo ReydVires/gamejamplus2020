@@ -41,8 +41,10 @@ export class AudioController {
 		});
 	}
 
-	playBGM (key: string, config?: Phaser.Types.Sound.SoundConfig): void {
+	playBGM (key: string, restart: boolean = true, config?: Phaser.Types.Sound.SoundConfig): void {
+		if (!restart && this._bgm?.isPlaying) return;
 		this.stopBGM();
+
 		if (!this._enableAudio) return;
 
 		const bgmConfig = config ?? { loop: true };
