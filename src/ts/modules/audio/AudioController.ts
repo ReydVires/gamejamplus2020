@@ -26,8 +26,9 @@ export class AudioController {
 			this._enableAudio = true;
 			this._isInitialize = true;
 
+			this._scene.sound.pauseOnBlur = true;
 			document.addEventListener("blur", this.pauseBGM.bind(this));
-			document.addEventListener("focusout", () => { if (this.isEnable()) this.enable(); });
+			document.addEventListener("focus", () => { if (this.isEnable()) this.enable(); });
 			document.addEventListener("visibilitychange", () => {
 				if (document.visibilityState === "visible") {
 					if (this.isEnable()) this.enable();
@@ -81,6 +82,7 @@ export class AudioController {
 	}
 
 	enable (): void {
+		if (this._bgm?.isPaused) this._bgm.resume();
 		this._enableAudio = true;
 	}
 
