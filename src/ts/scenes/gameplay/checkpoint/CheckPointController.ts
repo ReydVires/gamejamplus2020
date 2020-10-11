@@ -24,4 +24,8 @@ export class CheckPointController {
 		this._view.event.on(this._view.eventName.onClickConfirm, events);
 	}
 
+	onClickCancel (events: Function): void {
+		this._view.event.on(this._view.eventName.onClickCancel, events);
+	}
+
 }

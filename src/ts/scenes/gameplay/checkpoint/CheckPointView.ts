@@ -10,6 +10,7 @@ import { ScreenUtilController } from "../../../modules/screenutility/ScreenUtilC
 const EventNames = {
 	onClick: "onClick",
 	onClickConfirm: "onClickConfirm",
+	onClickCancel: "onClickCancel",
 	onCreateFinish: "onCreateFinish",
 };
 
@@ -108,7 +109,10 @@ export class CheckPointView implements BaseView {
 			fontSize: `${42 * panel.transform.displayToOriginalHeightRatio}px`
 		});
 		cancelBtn.transform.setToScaleDisplaySize(this._displayPercentage * buttonRatio);
-		cancelBtn.click.on(() => this.hideConfirmPanel());
+		cancelBtn.click.on(() => {
+			this.event.emit(this.eventName.onClickCancel);
+			this.hideConfirmPanel();
+		});
 
 		const gameobjects = [
 			panel.gameObject,
