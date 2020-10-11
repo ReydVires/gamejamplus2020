@@ -49,7 +49,8 @@ export class CheckPointView implements BaseView {
 			for (let i = 0; i < points.length; i++) {
 				const point = points[i].value;
 				const sprite = new Sprite(this._scene, this.screenUtility.width * point.x, this.screenUtility.height * point.y, Assets.checkpoint.key, 0);
-				sprite.transform.setToScaleDisplaySize(this._displayPercentage);
+				sprite.transform.setToScaleDisplaySize(this._displayPercentage * 0.785);
+				this.setTweenEffect(sprite.gameObject);
 				this.setInteractive(sprite.gameObject, points[i].key, new Phaser.Geom.Point(sprite.gameObject.x, sprite.gameObject.y));
 				this._sprites.push(sprite);
 			}
@@ -61,7 +62,7 @@ export class CheckPointView implements BaseView {
 		.on('pointerup', () => this._scene.tweens.add({
 			targets: gameObject,
 			props: {
-				alpha: { getStart: () => 0.65, getEnd: () => 1 }
+				scale: { getStart: () => gameObject.scaleY * 0.925, getEnd: () => gameObject.scaleY }
 			},
 			duration: 150,
 			onComplete: () => {
@@ -72,23 +73,25 @@ export class CheckPointView implements BaseView {
 		}));
 	}
 
+	private setTweenEffect (gameObject: Phaser.GameObjects.Sprite): void {
+		this._scene.tweens.add({
+			targets: gameObject,
+			props: {
+				alpha: { getStart: () => 1, getEnd: () => 0.4 }
+			},
+			yoyo: true,
+			repeat: -1,
+			duration: Phaser.Math.Between(500, 1000)
+		});
+	}
+
 	private createConfrimPanel (): void {
 		this._confirmContainer = this._scene.add.container(this.screenUtility.centerX, this.screenUtility.centerY).setDepth(20);
-		const panel = new Image(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.panel_confirm.key);
+		const panel = new Image(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.panel_confirm_checkpoint.key);
 		panel.transform.setToScaleDisplaySize(this._displayPercentage);
 
-		const infoPosText = panel.transform.getDisplayPositionFromCoordinate(0.5, 0.3);
-		const infoContent = "Do you want to go to this location?";
-		const infoText = new Text(this._scene, infoPosText.x, infoPosText.y, infoContent, {
-			fontSize: `${32 * panel.transform.displayToOriginalHeightRatio}px`,
-			color: 'black',
-			align: 'center',
-			wordWrap: { width: panel.transform.disaplayWidth * 0.9 }
-		});
-		infoText.gameObject.setOrigin(0.5, 0);
-
 		const buttonRatio = 1.65;
-		const confirmPosBtn = panel.transform.getDisplayPositionFromCoordinate(0.3, 0.8);
+		const confirmPosBtn = panel.transform.getDisplayPositionFromCoordinate(0.3, 0.72);
 		const confirmBtn = new GraphicsButton(this._scene, confirmPosBtn.x, confirmPosBtn.y, "Yes", {
 			color: 'black',
 			fontSize: `${42 * panel.transform.displayToOriginalHeightRatio}px`
@@ -99,7 +102,7 @@ export class CheckPointView implements BaseView {
 			this.event.emit(this.eventName.onClickConfirm, this._selectedCheckpoint);
 		});
 
-		const cancelPosBtn = panel.transform.getDisplayPositionFromCoordinate(0.7, 0.8);
+		const cancelPosBtn = panel.transform.getDisplayPositionFromCoordinate(0.7, 0.72);
 		const cancelBtn = new GraphicsButton(this._scene, cancelPosBtn.x, cancelPosBtn.y, "No", {
 			color: 'black',
 			fontSize: `${42 * panel.transform.displayToOriginalHeightRatio}px`
@@ -109,7 +112,6 @@ export class CheckPointView implements BaseView {
 
 		const gameobjects = [
 			panel.gameObject,
-			infoText.gameObject,
 			confirmBtn.container,
 			cancelBtn.container,
 		];

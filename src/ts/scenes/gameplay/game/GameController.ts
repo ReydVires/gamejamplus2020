@@ -14,6 +14,7 @@ export class GameController {
 	eventName: typeof EventNames;
 	private _gameState: GameState;
 
+	private _slimePoint: number;
 	private _checkpoints: CustomTypes.Gameplay.GameData.CheckpointData;
 	private _obstacles: CustomTypes.Gameplay.GameData.ObstacleData;
 
@@ -25,6 +26,7 @@ export class GameController {
 	}
 
 	init (): void {
+		this._slimePoint = gameplayData.slimePoint;
 		this._checkpoints = gameplayData.checkpoint;
 		this._obstacles = gameplayData.obstacle;
 	}
@@ -33,12 +35,23 @@ export class GameController {
 		return this._gameState;
 	}
 
+	get slimePoint (): number {
+		return this._slimePoint;
+	}
+
 	get checkpoints (): CustomTypes.Gameplay.GameData.CheckpointData {
 		return this._checkpoints;
 	}
 
 	get obstacles (): CustomTypes.Gameplay.GameData.ObstacleData {
 		return this._obstacles;
+	}
+
+	subtractSlimePoint (value: number): boolean {
+		const point = this._slimePoint - value;
+		if (point <= 0) return false;
+		this._slimePoint -= value;
+		return true;
 	}
 
 	gameStatePlaying (): void {
