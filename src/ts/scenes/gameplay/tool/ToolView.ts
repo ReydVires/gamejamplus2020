@@ -1,4 +1,5 @@
 import { CustomTypes } from "../../../../types/custom";
+import { FontListKey } from "../../../info/GameInfo";
 import { Assets } from "../../../library/AssetGameplay";
 import { BaseView } from "../../../modules/core/BaseView";
 import { Image } from "../../../modules/gameobjects/Image";
@@ -9,6 +10,8 @@ import { ScreenUtilController } from "../../../modules/screenutility/ScreenUtilC
 
 const EventNames = {
 	onClickTool: "onClickTool",
+	onSFXClickTool: "onSFXClickTool",
+	onSFXCancelTool: "onSFXCancelTool",
 };
 
 export class ToolView implements BaseView {
@@ -19,7 +22,7 @@ export class ToolView implements BaseView {
 
 	screenOverlay: Rectangle | undefined;
 	displayPercentage: number;
-	maxTools: number = 4;
+	maxTools: number = 5;
 
 	toolsContainer: Phaser.GameObjects.Container;
 	toolsHUD: Image;
@@ -50,7 +53,7 @@ export class ToolView implements BaseView {
 		this.toolsHUD = new Image(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.tools_hud.key);
 		this.toolsHUD.transform.setToScaleDisplaySize(this.displayPercentage);
 
-		const exitPosBtn = this.toolsHUD.transform.getDisplayPositionFromCoordinate(1, 0);
+		const exitPosBtn = this.toolsHUD.transform.getDisplayPositionFromCoordinate(0.98, 0.1);
 		const exitBtn = new Image(this._scene, exitPosBtn.x, exitPosBtn.y, Assets.exit_btn.key);
 		exitBtn.transform.setToScaleDisplaySize(this.toolsHUD.transform.displayToOriginalHeightRatio);
 		exitBtn.gameObject.setInteractive({ useHandCursor: true }).on('pointerup', () => this._scene.tweens.add({
@@ -68,8 +71,8 @@ export class ToolView implements BaseView {
 
 	private createTools (): void {
 		for (let i = 0; i < this.maxTools; i++) {
-			const width = this.screenUtility.width / 5;
-			const tool = new Image(this._scene, width * (i + 1), this.toolsHUD.gameObject.y, "");
+			const width = this.screenUtility.width / (this.maxTools + 1);
+			const tool = new Image(this._scene, width * (i + 1), this.toolsHUD.gameObject.y * 1.02, "");
 			tool.gameObject.setVisible(false);
 			this.toolsContainer.add(tool.gameObject);
 			this.toolList.push(tool);
@@ -85,6 +88,7 @@ export class ToolView implements BaseView {
 		this.toolInfoText = new Text(this._scene, toolInfoPosText.x, toolInfoPosText.y, "Lorem dolor sit amet ipsum dolor sit amet amet ipsum dolor sit amet", {
 			fontSize: `${32 * panel.transform.displayToOriginalHeightRatio}px`,
 			color: 'black',
+			fontFamily: FontListKey.ROBOTO,
 			align: 'center',
 			wordWrap: { width: panel.transform.disaplayWidth * 0.9 }
 		});
@@ -135,6 +139,7 @@ export class ToolView implements BaseView {
 	}
 
 	private showConfirmPanel (): void {
+		this.event.emit(this.eventName.onSFXClickTool);
 		this.screenOverlay?.gameObject.setVisible(true);
 		if (this.screenOverlay) this.confirmContainer.addAt(this.screenOverlay.gameObject);
 		const { name, cost } = this.selectedTool;
@@ -144,6 +149,7 @@ export class ToolView implements BaseView {
 	}
 
 	private hideConfirmPanel (): void {
+		this.event.emit(this.eventName.onSFXCancelTool);
 		this.screenOverlay?.gameObject.setVisible(true);
 		if (this.screenOverlay) this.toolsContainer.addAt(this.screenOverlay.gameObject); // FIXME Simplify it!
 		this.confirmContainer.setVisible(false);
@@ -155,9 +161,10 @@ export class ToolView implements BaseView {
 			for (let i = 0; i < maxTools; i++) {
 				this.selectedTool = tools[i];
 				const toolHolder = this.toolList[i];
-				toolHolder.transform.setToScaleDisplaySize(this.toolsHUD.transform.displayToOriginalHeightRatio);
+				toolHolder.transform.setToScaleDisplaySize(this.toolsHUD.transform.displayToOriginalHeightRatio * 0.65);
 				toolHolder.gameObject.setTexture(this.selectedTool.texture);
 				toolHolder.gameObject.setVisible(true);
+				toolHolder.gameObject.setOrigin(0.55, 0.55);
 				this.setInteractive(toolHolder.gameObject);
 			}
 		}
