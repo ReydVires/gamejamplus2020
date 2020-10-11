@@ -17,10 +17,15 @@ export const Assets: CustomTypes.Asset.ObjectAsset = {
 		url: 'assets/img/loading/img_bg_loading.png',
 		type: 'STATIC'
 	},
+	slime_loading: {
+		key: 'slime_loading',
+		url: 'assets/img/loading/img_slime_loading.png',
+		type: 'STATIC'
+	},
 	loading_text: {
 		key: 'loading_text',
 		url: 'assets/img/loading/spr_loading-text.png',
-		width: 384,
+		width: 420,
 		height: 512/4,
 		type: 'SPRITESHEET'
 	},
