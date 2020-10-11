@@ -57,6 +57,7 @@ export class GameplaySceneController extends BaseSceneController {
 			this.audioController.playSFX(Audio.sfx_click.key);
 			console.log("checkPointController.onClick::", id);
 		});
+		this.checkPointController.onClickCancel(() => this.audioController.playSFX(Audio.sfx_click.key));
 
 		this.gameController.init();
 		this.backgroundController.init();
@@ -72,7 +73,7 @@ export class GameplaySceneController extends BaseSceneController {
 
 		this.onSFXClick(() => this.audioController.playSFX(Audio.sfx_click.key));
 		this.onCreateFinish(() => {
-			this.onSFXCancelTool(() => this.audioController.playSFX(Audio.sfx_cancel.key));
+			this.onSFXCancelTool(() => this.audioController.playSFX(Audio.sfx_click.key));
 			this.onSFXClickTool(() => this.audioController.playSFX(Audio.sfx_click.key));
 			this.onClickTool((name, cost) => {
 				this.audioController.playSFX(AudioTitle.sfx_click_confirm.key);
