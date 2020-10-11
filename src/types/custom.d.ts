@@ -66,7 +66,8 @@ export declare namespace CustomTypes {
                 id: string,
                 texture: string,
                 position: Phaser.Geom.Point,
-                tools: ToolInfo[]
+                tools: ToolInfo[],
+                equip: CustomTypes.General.KeyValuePair<string, Phaser.Geom.Point>;
             }
 
             type ObstacleData = {
