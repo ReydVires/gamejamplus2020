@@ -7,19 +7,24 @@ export const Assets: CustomTypes.Asset.ObjectAsset = {
 		url: "assets/img/bg/img_bg_game.png",
 		type: "STATIC"
 	},
-	obstacle_a: {
-		key: "obstacle_a",
-		url: "assets/img/obstacles/img_obstacle_a.png",
+	obstacle_book_brown: {
+		key: "obstacle_book_brown",
+		url: "assets/img/obstacles/img_obstacle_book_brown.png",
 		type: "STATIC"
 	},
-	obstacle_b: {
-		key: "obstacle_b",
-		url: "assets/img/obstacles/img_obstacle_b.png",
+	obstacle_book_grey: {
+		key: "obstacle_book_grey",
+		url: "assets/img/obstacles/img_obstacle_book_grey.png",
 		type: "STATIC"
 	},
-	obstacle_c: {
-		key: "obstacle_c",
-		url: "assets/img/obstacles/img_obstacle_c.png",
+	obstacle_watch: {
+		key: "obstacle_watch",
+		url: "assets/img/obstacles/img_obstacle_watch.png",
+		type: "STATIC"
+	},
+	obstacle_cup: {
+		key: "obstacle_cup",
+		url: "assets/img/obstacles/img_obstacle_cup.png",
 		type: "STATIC"
 	},
 	baloon_decline: {
@@ -27,14 +32,19 @@ export const Assets: CustomTypes.Asset.ObjectAsset = {
 		url: "assets/img/slime/img_baloon_decline.png",
 		type: "STATIC"
 	},
-	slime_char: {
-		key: "slime_char",
-		url: "assets/img/slime/spr_slime_char.png",
-		type: "STATIC"
-	},
 	checkpoint: {
 		key: "checkpoint",
 		url: "assets/img/checkpoint/spr_checkpoint.png",
+		type: "STATIC"
+	},
+	misc_book_a: {
+		key: "misc_book_a",
+		url: "assets/img/misc/img_misc_book_a.png",
+		type: "STATIC"
+	},
+	misc_book_b: {
+		key: "misc_book_b",
+		url: "assets/img/misc/img_misc_book_b.png",
 		type: "STATIC"
 	},
 	exit_btn: {
@@ -61,6 +71,13 @@ export const Assets: CustomTypes.Asset.ObjectAsset = {
 		key: "tools_b",
 		url: "assets/img/tools/img_tools_b.png",
 		type: "STATIC"
+	},
+	slime_char: {
+		key: "slime_char",
+		url: "assets/img/slime/spr_slime_char.png",
+		width: 708/2,
+		height: 963/3,
+		type: "SPRITESHEET"
 	},
 	sfx_click: {
 		key: "sfx_click",
