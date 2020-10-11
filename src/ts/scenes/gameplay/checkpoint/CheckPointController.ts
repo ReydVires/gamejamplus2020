@@ -1,7 +1,8 @@
 import { CustomTypes } from "../../../../types/custom";
 import { CheckPointView } from "./CheckPointView";
 
-const OnClick = (index: number, id: string) => {};
+const OnClick = (id: string) => {};
+const onClickConfirm = (target: CustomTypes.General.KeyValuePair<string, Phaser.Geom.Point>) => {};
 
 export class CheckPointController {
 
@@ -17,6 +18,10 @@ export class CheckPointController {
 
 	onClick (events: typeof OnClick): void {
 		this._view.event.on(this._view.eventName.onClick, events);
+	}
+
+	onClickConfirm (events: typeof onClickConfirm): void {
+		this._view.event.on(this._view.eventName.onClickConfirm, events);
 	}
 
 }

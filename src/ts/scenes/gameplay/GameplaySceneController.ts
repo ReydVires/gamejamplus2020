@@ -45,8 +45,12 @@ export class GameplaySceneController extends BaseSceneController {
 				break;
 			}
 		});
-		this.checkPointController.onClick((index, id) => {
-			console.log("checkPointController::", index, id);
+		this.checkPointController.onClickConfirm((target) => {
+			console.log("checkPointController.onClickConfirm::", target.key);
+			this.slimeController.setPosition(target.value.x, target.value.y);
+		});
+		this.checkPointController.onClick((id) => {
+			console.log("checkPointController.onClick::", id);
 		});
 
 		this.gameController.init();
