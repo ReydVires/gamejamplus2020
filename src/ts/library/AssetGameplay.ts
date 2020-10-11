@@ -57,19 +57,34 @@ export const Assets: CustomTypes.Asset.ObjectAsset = {
 		url: "assets/img/gui/img_panel_confirm.png",
 		type: "STATIC"
 	},
+	slime_holder: {
+		key: "slime_holder",
+		url: "assets/img/gui/img_slime_holder.png",
+		type: "STATIC"
+	},
 	tools_hud: {
 		key: "tools_hud",
 		url: "assets/img/gui/img_tools_hud.png",
 		type: "STATIC"
 	},
-	tools_a: {
-		key: "tools_a",
-		url: "assets/img/tools/img_tools_a.png",
+	tools_stair: {
+		key: "tools_stair",
+		url: "assets/img/tools/img_tools_stair.png",
 		type: "STATIC"
 	},
-	tools_b: {
-		key: "tools_b",
-		url: "assets/img/tools/img_tools_b.png",
+	tools_plane: {
+		key: "tools_plane",
+		url: "assets/img/tools/img_tools_plane.png",
+		type: "STATIC"
+	},
+	equip_stair: {
+		key: "equip_stair",
+		url: "assets/img/tools/img_equip_stair.png",
+		type: "STATIC"
+	},
+	equip_plane: {
+		key: "equip_plane",
+		url: "assets/img/tools/img_equip_plane.png",
 		type: "STATIC"
 	},
 	slime_char: {
