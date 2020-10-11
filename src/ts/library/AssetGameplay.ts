@@ -57,6 +57,11 @@ export const Assets: CustomTypes.Asset.ObjectAsset = {
 		url: "assets/img/gui/img_panel_confirm.png",
 		type: "STATIC"
 	},
+	panel_confirm_checkpoint: {
+		key: "panel_confirm_checkpoint",
+		url: "assets/img/gui/img_panel_confirm_checkpoint.png",
+		type: "STATIC"
+	},
 	slime_holder: {
 		key: "slime_holder",
 		url: "assets/img/gui/img_slime_holder.png",
@@ -97,6 +102,16 @@ export const Assets: CustomTypes.Asset.ObjectAsset = {
 	sfx_click: {
 		key: "sfx_click",
 		url: ["assets/audio/sfx/sfx_click.mp3"],
+		type: "AUDIO"
+	},
+	sfx_cancel: {
+		key: "sfx_cancel",
+		url: ["assets/audio/sfx/sfx_cancel.mp3"],
+		type: "AUDIO"
+	},
+	sfx_slime_move: {
+		key: "sfx_slime_move",
+		url: ["assets/audio/sfx/sfx_slime_move.mp3"],
 		type: "AUDIO"
 	},
 

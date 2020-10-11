@@ -57,7 +57,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
 	banner: { hidePhaser: !CONFIG.ENABLE_LOG },
 	type: renderType,
 	parent: 'game',
-	backgroundColor: '#3498db',
+	backgroundColor: '#000',
 	scale: {
 		mode: Phaser.Scale.NONE,
 		width: screenProfile.actualWidth,

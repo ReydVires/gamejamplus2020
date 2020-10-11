@@ -12,6 +12,11 @@ export const Assets: CustomTypes.Asset.ObjectAsset = {
 		url: 'assets/img/loading/img_loading-frame.png',
 		type: 'STATIC'
 	},
+	bg_loading: {
+		key: 'bg_loading',
+		url: 'assets/img/loading/img_bg_loading.png',
+		type: 'STATIC'
+	},
 	loading_text: {
 		key: 'loading_text',
 		url: 'assets/img/loading/spr_loading-text.png',
