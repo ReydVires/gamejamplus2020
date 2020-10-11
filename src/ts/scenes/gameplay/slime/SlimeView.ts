@@ -12,7 +12,7 @@ export class SlimeView implements BaseView {
 	event: Phaser.Events.EventEmitter;
 	screenUtility: ScreenUtilController;
 	eventName: typeof EventNames;
-	private _sprite: Sprite;
+	sprite: Sprite;
 
 	constructor (private _scene: Phaser.Scene) {
 		this.screenUtility = ScreenUtilController.getInstance();
@@ -21,9 +21,9 @@ export class SlimeView implements BaseView {
 	}
 
 	create (displayPercentage: number): void {
-		this._sprite = new Sprite(this._scene, this.screenUtility.centerX, this.screenUtility.height * 0.95, Assets.slime_char.key, 0);
-		this._sprite.gameObject.setOrigin(0.5, 1);
-		this._sprite.transform.setToScaleDisplaySize(displayPercentage);
+		this.sprite = new Sprite(this._scene, this.screenUtility.centerX, this.screenUtility.height * 0.95, Assets.slime_char.key, 0);
+		this.sprite.gameObject.setOrigin(0.5, 1);
+		this.sprite.transform.setToScaleDisplaySize(displayPercentage);
 
 		this.event.emit(this.eventName.onCreateFinish);
 	}

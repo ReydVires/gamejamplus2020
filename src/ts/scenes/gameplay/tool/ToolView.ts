@@ -46,7 +46,7 @@ export class ToolView implements BaseView {
 	}
 
 	private createHUD (): void {
-		this.toolsContainer = this._scene.add.container(0, 0);
+		this.toolsContainer = this._scene.add.container(0, 0).setDepth(20);
 		this.toolsHUD = new Image(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.tools_hud.key);
 		this.toolsHUD.transform.setToScaleDisplaySize(this.displayPercentage);
 
@@ -77,8 +77,8 @@ export class ToolView implements BaseView {
 	}
 
 	private createConfrimPanel (): void {
-		this.confirmContainer = this._scene.add.container(0, 0);
-		const panel = new Image(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.panel_buy_tool.key);
+		this.confirmContainer = this._scene.add.container(0, 0).setDepth(20);
+		const panel = new Image(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.panel_confirm.key);
 		panel.transform.setToScaleDisplaySize(this.displayPercentage);
 
 		const toolInfoPosText = panel.transform.getDisplayPositionFromCoordinate(0.5, 0.3);
@@ -134,6 +134,21 @@ export class ToolView implements BaseView {
 		}));
 	}
 
+	private showConfirmPanel (): void {
+		this.screenOverlay?.gameObject.setVisible(true);
+		if (this.screenOverlay) this.confirmContainer.addAt(this.screenOverlay.gameObject);
+		const { name, cost } = this.selectedTool;
+		const content = `Are you sure will buy this ${name} with cost ${cost}?`;
+		this.toolInfoText.gameObject.setText(content);
+		this.confirmContainer.setVisible(true);
+	}
+
+	private hideConfirmPanel (): void {
+		this.screenOverlay?.gameObject.setVisible(true);
+		if (this.screenOverlay) this.toolsContainer.addAt(this.screenOverlay.gameObject); // FIXME Simplify it!
+		this.confirmContainer.setVisible(false);
+	}
+
 	showToolsGUI (tools?: CustomTypes.Gameplay.GameData.ToolInfo[]): void {
 		if (Array.isArray(tools)) {
 			const maxTools = tools.length >= this.maxTools ? this.maxTools : tools.length;
@@ -151,23 +166,8 @@ export class ToolView implements BaseView {
 		this.toolsContainer.setVisible(true);
 	}
 
-	showConfirmPanel (): void {
-		this.screenOverlay?.gameObject.setVisible(true);
-		if (this.screenOverlay) this.confirmContainer.addAt(this.screenOverlay.gameObject);
-		const { name, cost } = this.selectedTool;
-		const content = `Are you sure will buy this ${name} with cost ${cost}?`;
-		this.toolInfoText.gameObject.setText(content);
-		this.confirmContainer.setVisible(true);
-	}
-
 	hideToolsGUI (): void {
 		this.toolsContainer.setVisible(false);
-	}
-
-	hideConfirmPanel (): void {
-		this.screenOverlay?.gameObject.setVisible(true);
-		if (this.screenOverlay) this.toolsContainer.addAt(this.screenOverlay.gameObject); // FIXME Simplify it!
-		this.confirmContainer.setVisible(false);
 	}
 
 }

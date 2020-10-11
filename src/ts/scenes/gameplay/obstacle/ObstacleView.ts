@@ -5,6 +5,7 @@ import { ScreenUtilController } from "../../../modules/screenutility/ScreenUtilC
 
 const EventNames = {
 	onClick: "onClick",
+	onClickConfirm: "onClickConfirm",
 	onCreateFinish: "onCreateFinish",
 };
 
@@ -42,13 +43,13 @@ export class ObstacleView implements BaseView {
 				const point = obstacle.position;
 				const sprite = new Image(this._scene, this.screenUtility.width * point.x, this.screenUtility.height * point.y, obstacle.texture);
 				sprite.transform.setToScaleDisplaySize(this._displayPercentage);
-				this.setInteractive(sprite.gameObject, obstacle.id);
+				this.setInteractive(sprite.gameObject, obstacle);
 				this._sprites.push(sprite);
 			}
 		}
 	}
 
-	private setInteractive (gameObject: Phaser.GameObjects.Image, id: string): void {
+	private setInteractive (gameObject: Phaser.GameObjects.Image, obstacle: CustomTypes.Gameplay.GameData.ObstacleInfo): void {
 		gameObject.setInteractive({ useHandCursor: true })
 		.on('pointerup', () => this._scene.tweens.add({
 			targets: gameObject,
@@ -57,7 +58,7 @@ export class ObstacleView implements BaseView {
 			},
 			duration: 150,
 			onComplete: () => {
-				this.event.emit(this.eventName.onClick, id);
+				this.event.emit(this.eventName.onClick, obstacle.id);
 			}
 		}));
 	}
