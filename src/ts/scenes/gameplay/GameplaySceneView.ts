@@ -1,12 +1,12 @@
 import { BaseView } from "../../modules/core/BaseView";
 import { ScreenUtilController } from "../../modules/screenutility/ScreenUtilController";
-import { Assets } from "../../library/AssetGameplay";
 import { GraphicsButton as Button } from "../../modules/gameobjects/ui/GraphicsButton";
-import { Image } from "../../modules/gameobjects/Image";
 import { FontListKey, SceneListKey } from "../../info/GameInfo";
+import { Rectangle } from "../../modules/gameobjects/Rectangle";
+import { ToolView } from "./tool/ToolView";
 
 const EventNames = {
-	onClickSFX: "onClickSFX",
+	onSFXClick: "onSFXClick",
 	onCreateFinish: "onCreateFinish",
 };
 
@@ -16,38 +16,53 @@ export class GameplaySceneView implements BaseView {
 	screenUtility: ScreenUtilController;
 	eventName: typeof EventNames;
 
+	screenOverlay: Rectangle;
+	tool: ToolView;
+
 	constructor (private _scene: Phaser.Scene) {
 		this.screenUtility = ScreenUtilController.getInstance();
 		this.event = new Phaser.Events.EventEmitter();
 		this.eventName = EventNames;
 	}
 
-	create (): void {
-		const { centerX, centerY, width, height, ratio, screenPercentage } = this.screenUtility;
+	create (displayPercentage: number): void {
+		const { width } = this.screenUtility;
 
-		const testSprite = new Image(this._scene, centerX, centerY * 0.5, Assets.phaser_logo.key);
-		testSprite.transform.setMinPreferredDisplaySize(width * 0.3, height * 0.3);
-
-		const restartBtn = new Button(this._scene, centerX, centerY * 1.2, "Restart", {
+		const restartStyleBtn: Phaser.Types.GameObjects.Text.TextStyle = {
 			color: 'black',
 			fontFamily: FontListKey.ROBOTO,
+		};
+		const restartBtn = new Button(this._scene, width * 0.875, 64 * displayPercentage, "Restart", restartStyleBtn, {
+			fill: 0x95a5a6,
+			alpha: 1,
+			height: 64,
+			width: 150
 		});
-		restartBtn.transform.setToScaleDisplaySize(testSprite.transform.displayToOriginalHeightRatio * 1.5);
+		restartBtn.transform.setToScaleDisplaySize(displayPercentage * 1.5);
 		restartBtn.labelText.gameObject.setFontSize(32 * restartBtn.transform.displayToOriginalHeightRatio);
 		restartBtn.click.once(() => {
-			this.event.emit(this.eventName.onClickSFX);
+			this.event.emit(this.eventName.onSFXClick);
 			const scene = this._scene.scene;
 			scene.start(SceneListKey.TITLE);
 		});
 
-		const otherSprite = new Image(this._scene, centerX, centerY * 0.6, Assets.phaser_logo.key);
-		otherSprite.transform.setToScreenPercentage(0.2 / ratio);
+		this.tool = new ToolView(this._scene);
+
+		this.createScreenOverlay();
+		this.tool.create(displayPercentage, this.screenOverlay);
 
 		this.event.emit(this.eventName.onCreateFinish);
 	}
 
+	private createScreenOverlay (): void {
+		const color = 0x2d3436;
+		const alpha = 0.55;
+		this.screenOverlay = new Rectangle(this._scene, 0, 0, this.screenUtility.width, this.screenUtility.height, color);
+		this.screenOverlay.gameObject.setOrigin(0).setAlpha(alpha).setInteractive().setVisible(false);
+	}
+
 	update (time: number, dt: number): void {
-		if (this._scene.input.keyboard.addKey('R').isDown) {
+		if (this._scene.input.keyboard.addKey('Z').isDown) {
 			const scene = this._scene.scene;
 			scene.start(SceneListKey.TITLE);
 		}
