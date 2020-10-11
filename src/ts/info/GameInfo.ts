@@ -22,9 +22,10 @@ export const ToolsListKey = {
 };
 
 export const ObstaclesListKey = {
-	BOOK_A: "Book-A",
+	BOOK_BROWN: "Book-Brown",
+	BOOK_GREY: "Book-Grey",
+	JUICE_CUP: "Juice-Cup",
 	WATCH: "Watch",
-	WALL: "Wall",
 };
 
 export const enum GameState {
