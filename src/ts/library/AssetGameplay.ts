@@ -42,9 +42,9 @@ export const Assets: CustomTypes.Asset.ObjectAsset = {
 		url: "assets/img/gui/img_exit_btn.png",
 		type: "STATIC"
 	},
-	panel_buy_tool: {
-		key: "panel_buy_tool",
-		url: "assets/img/gui/img_panel_buy_tool.png",
+	panel_confirm: {
+		key: "panel_confirm",
+		url: "assets/img/gui/img_panel_confirm.png",
 		type: "STATIC"
 	},
 	tools_hud: {
