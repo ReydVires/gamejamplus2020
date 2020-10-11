@@ -12,7 +12,8 @@ export class BackgroundView implements BaseView {
 	event: Phaser.Events.EventEmitter;
 	screenUtility: ScreenUtilController;
 	eventName: typeof EventNames;
-	private _sprite: Image;
+	private _sprites: Image[];
+	private _maxBg: number = 2;
 
 	constructor (private _scene: Phaser.Scene) {
 		this.event = new Phaser.Events.EventEmitter();
@@ -21,15 +22,19 @@ export class BackgroundView implements BaseView {
 	}
 
 	create (): void {
-		this._sprite = new Image(this._scene, this.screenUtility.centerX, this.screenUtility.height, Assets.bg_game.key);
-		this._sprite.transform.setMinPreferredDisplaySize(this.screenUtility.width, this.screenUtility.height);
-		this._sprite.gameObject.setOrigin(0.5, 1);
+		this._sprites = [];
+		for (let i = this._maxBg; i > 0; i--) {
+			const sprite = new Image(this._scene, this.screenUtility.centerX, this.screenUtility.height * (i - 1), Assets.bg_game.key);
+			sprite.transform.setMinPreferredDisplaySize(this.screenUtility.width, this.screenUtility.height);
+			sprite.gameObject.setOrigin(0.5, 1);
+			this._sprites.push(sprite);
+		}
 
 		this.event.emit(this.eventName.onCreateFinish);
 	}
 
 	get displayHeightRatio (): number {
-		return this._sprite.transform.displayToOriginalHeightRatio;
+		return this._sprites[0].transform.displayToOriginalHeightRatio;
 	}
 
 }
