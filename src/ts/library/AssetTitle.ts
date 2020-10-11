@@ -1,6 +1,4 @@
-import { CustomTypes } from "../../types/custom";
-
-export const Assets: CustomTypes.Asset.ObjectAsset = {
+export const Assets = {
 
 	bg_title: {
 		key: "bg_title",

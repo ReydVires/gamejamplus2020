@@ -1,6 +1,4 @@
-import { CustomTypes } from "../../types/custom";
-
-export const Assets: CustomTypes.Asset.ObjectAsset = {
+export const Assets = {
 
 	loading_bar: {
 		key: 'loading_bar',
@@ -25,7 +23,7 @@ export const Assets: CustomTypes.Asset.ObjectAsset = {
 	loading_text: {
 		key: 'loading_text',
 		url: 'assets/img/loading/spr_loading-text.png',
-		width: 420,
+		width: 448,
 		height: 512/4,
 		type: 'SPRITESHEET'
 	},
