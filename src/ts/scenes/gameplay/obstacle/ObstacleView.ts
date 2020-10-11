@@ -17,7 +17,6 @@ export class ObstacleView implements BaseView {
 
 	private _displayPercentage: number;
 	private _obstacles: CustomTypes.Gameplay.GameData.ObstacleData;
-	private _sprites: Image[];
 
 	constructor (private _scene: Phaser.Scene) {
 		this.event = new Phaser.Events.EventEmitter();
@@ -34,7 +33,6 @@ export class ObstacleView implements BaseView {
 	}
 
 	private createObstacles (): void {
-		this._sprites = [];
 		for (const key in this._obstacles) {
 			if (!Reflect.has(this._obstacles, key)) continue;
 			const obstacles = this._obstacles[key];
@@ -43,22 +41,25 @@ export class ObstacleView implements BaseView {
 				const point = obstacle.position;
 				const sprite = new Image(this._scene, this.screenUtility.width * point.x, this.screenUtility.height * point.y, obstacle.texture);
 				sprite.transform.setToScaleDisplaySize(this._displayPercentage);
-				this.setInteractive(sprite.gameObject, obstacle);
-				this._sprites.push(sprite);
+				const equipment = new Image(this._scene, this.screenUtility.width * obstacle.equip.value.x, this.screenUtility.height * obstacle.equip.value.y, obstacle.equip.key);
+				this.setInteractive(sprite.gameObject, obstacle, equipment.gameObject);
+
+				equipment.transform.setToScaleDisplaySize(this._displayPercentage);
+				equipment.gameObject.setOrigin(0.5, 0).setVisible(false);
 			}
 		}
 	}
 
-	private setInteractive (gameObject: Phaser.GameObjects.Image, obstacle: CustomTypes.Gameplay.GameData.ObstacleInfo): void {
+	private setInteractive (gameObject: Phaser.GameObjects.Image, obstacle: CustomTypes.Gameplay.GameData.ObstacleInfo, equip: Phaser.GameObjects.Image): void {
 		gameObject.setInteractive({ useHandCursor: true })
 		.on('pointerup', () => this._scene.tweens.add({
 			targets: gameObject,
 			props: {
-				alpha: { getStart: () => 0.65, getEnd: () => 1 },
+				scale: { getStart: () => gameObject.scaleY * 0.95, getEnd: () => gameObject.scaleY },
 			},
 			duration: 150,
 			onComplete: () => {
-				this.event.emit(this.eventName.onClick, obstacle.id);
+				this.event.emit(this.eventName.onClick, obstacle.id, equip);
 			}
 		}));
 	}

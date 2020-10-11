@@ -1,7 +1,7 @@
 import { CustomTypes } from "../../../../types/custom";
 import { ObstacleView } from "./ObstacleView";
 
-const OnClick = (id: string) => {};
+const OnClick = (id: string, equip: Phaser.GameObjects.Image) => {};
 
 export class ObstacleController {
 
