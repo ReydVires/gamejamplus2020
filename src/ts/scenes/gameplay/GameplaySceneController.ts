@@ -75,6 +75,7 @@ export class GameplaySceneController extends BaseSceneController {
 			this.onSFXCancelTool(() => this.audioController.playSFX(Audio.sfx_cancel.key));
 			this.onSFXClickTool(() => this.audioController.playSFX(Audio.sfx_click.key));
 			this.onClickTool((name, cost) => {
+				this.audioController.playSFX(AudioTitle.sfx_click_confirm.key);
 				if (!this.gameController.subtractSlimePoint(cost)) return;
 				this.view.updateSlimePoint(this.gameController.slimePoint);
 			});

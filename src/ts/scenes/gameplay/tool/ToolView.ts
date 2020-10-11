@@ -57,6 +57,7 @@ export class ToolView implements BaseView {
 		const exitBtn = new Image(this._scene, exitPosBtn.x, exitPosBtn.y, Assets.exit_btn.key);
 		exitBtn.transform.setToScaleDisplaySize(this.toolsHUD.transform.displayToOriginalHeightRatio);
 		exitBtn.gameObject.setInteractive({ useHandCursor: true }).on('pointerup', () => this._scene.tweens.add({
+			onStart: () => this.event.emit(this.eventName.onSFXClickTool),
 			targets: exitBtn.gameObject,
 			props: {
 				scale: { getStart: () => (exitBtn.gameObject.scaleY * 0.75), getEnd: () => exitBtn.gameObject.scaleY }
@@ -113,7 +114,10 @@ export class ToolView implements BaseView {
 			fontSize: `${42 * panel.transform.displayToOriginalHeightRatio}px`
 		});
 		cancelBtn.transform.setToScaleDisplaySize(this.displayPercentage * buttonRatio);
-		cancelBtn.click.on(() => this.hideConfirmPanel());
+		cancelBtn.click.on(() => {
+			this.event.emit(this.eventName.onSFXCancelTool);
+			this.hideConfirmPanel();
+		});
 
 		const gameobjects = [
 			panel.gameObject,
@@ -149,7 +153,6 @@ export class ToolView implements BaseView {
 	}
 
 	private hideConfirmPanel (): void {
-		this.event.emit(this.eventName.onSFXCancelTool);
 		this.screenOverlay?.gameObject.setVisible(true);
 		if (this.screenOverlay) this.toolsContainer.addAt(this.screenOverlay.gameObject); // FIXME Simplify it!
 		this.confirmContainer.setVisible(false);
