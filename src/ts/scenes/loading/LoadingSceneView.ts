@@ -19,6 +19,9 @@ export class LoadingSceneView implements BaseView {
 	}
 
 	create (): void {
+		const bg = new Sprite(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.bg_loading.key);
+		bg.transform.setMinPreferredDisplaySize(this.screenUtility.width, this.screenUtility.height);
+
 		const frame = new Sprite(this._scene, this.screenUtility.centerX, this.screenUtility.centerY, Assets.loading_frame.key);
 		frame.transform.setMaxPreferredDisplaySize(this.screenUtility.width, this.screenUtility.height);
 		frame.gameObject.setOrigin(0.5)

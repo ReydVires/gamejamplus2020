@@ -3,11 +3,13 @@ import { LoadingSceneView } from "./LoadingSceneView";
 import { BaseSceneController } from "../../modules/core/BaseSceneController";
 import { SceneListKey } from "../../info/GameInfo";
 import { LoadingLoaderController } from "./loader/LoadingLoaderController";
+import { TitleLoaderController } from "./loader/TitleLoaderController";
 
 export class LoadingSceneController extends BaseSceneController {
 
 	view: LoadingSceneView;
 	loadingLoaderController: LoadingLoaderController;
+	titleLoaderController: TitleLoaderController;
 	gameplayLoaderController: GameplayLoaderController;
 
 	constructor () {
@@ -17,6 +19,7 @@ export class LoadingSceneController extends BaseSceneController {
 	init (): void {
 		this.view = new LoadingSceneView(this);
 		this.loadingLoaderController = new LoadingLoaderController(this);
+		this.titleLoaderController = new TitleLoaderController(this);
 		this.gameplayLoaderController = new GameplayLoaderController(this);
 	}
 
@@ -45,6 +48,7 @@ export class LoadingSceneController extends BaseSceneController {
 
 	loadResources (): void {
 		// LOAD ALL GAME FILE HERE!
+		this.titleLoaderController.loadResources();
 		this.gameplayLoaderController.loadResources();
 	}
 
