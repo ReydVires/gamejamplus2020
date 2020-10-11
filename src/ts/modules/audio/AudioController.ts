@@ -25,10 +25,9 @@ export class AudioController {
 			this._sfxCache = new Map<string, Phaser.Sound.BaseSound>();
 			this._enableAudio = true;
 			this._isInitialize = true;
-			this._scene.sound.pauseOnBlur = true;
 
 			document.addEventListener("blur", this.pauseBGM.bind(this));
-			document.addEventListener("focus", () => { if (this.isEnable()) this.enable(); });
+			document.addEventListener("focusout", () => { if (this.isEnable()) this.enable(); });
 			document.addEventListener("visibilitychange", () => {
 				if (document.visibilityState === "visible") {
 					if (this.isEnable()) this.enable();
