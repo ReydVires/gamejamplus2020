@@ -17,11 +17,11 @@ export class TitleSceneController extends BaseSceneController {
 		this.view = new TitleSceneView(this);
 		this.audioController = AudioController.getInstance();
 
-		this.audioController.playBGM(Audio.bgm_main.key);
+		this.audioController.playBGM(Audio.bgm_main.key, false);
 
 		this.onTapAction(() => {
 			this.audioController.playSFX(Audio.sfx_click_confirm.key);
-			this.cameras.main.fadeOut(350).once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+			this.cameras.main.fadeOut(300).once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
 				this.scene.start(SceneListKey.GAMEPLAY);
 			});
 		});

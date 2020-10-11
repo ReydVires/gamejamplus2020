@@ -30,7 +30,7 @@ export class GameplaySceneView implements BaseView {
 	}
 
 	create (displayPercentage: number, slimePoint: number): void {
-		const { width } = this.screenUtility;
+		this._scene.cameras.main.fadeIn(250);
 
 		const restartStyleBtn: Phaser.Types.GameObjects.Text.TextStyle = {
 			color: 'black',
