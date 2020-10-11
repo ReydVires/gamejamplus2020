@@ -1,10 +1,13 @@
 import { TitleSceneView } from "./TitleSceneView";
 import { BaseSceneController } from "../../modules/core/BaseSceneController";
 import { SceneListKey } from "../../info/GameInfo";
+import { AudioController } from "../../modules/audio/AudioController";
+import { Assets as Audio } from "../../library/AssetTitle";
 
 export class TitleSceneController extends BaseSceneController {
 
 	view: TitleSceneView;
+	audioController: AudioController;
 
 	constructor () {
 		super(SceneListKey.TITLE);
@@ -12,8 +15,16 @@ export class TitleSceneController extends BaseSceneController {
 
 	init (): void {
 		this.view = new TitleSceneView(this);
+		this.audioController = AudioController.getInstance();
 
-		this.onTapAction(() => this.scene.start(SceneListKey.GAMEPLAY));
+		this.audioController.playBGM(Audio.bgm_main.key);
+
+		this.onTapAction(() => {
+			this.audioController.playSFX(Audio.sfx_click_confirm.key);
+			this.cameras.main.fadeOut(350).once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+				this.scene.start(SceneListKey.GAMEPLAY);
+			});
+		});
 		this.onCreateFinish(() => {});
 	}
 
