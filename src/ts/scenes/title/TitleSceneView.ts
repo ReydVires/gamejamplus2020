@@ -1,7 +1,5 @@
 import { ScreenUtilController } from "../../modules/screenutility/ScreenUtilController";
 import { BaseView } from "../../modules/core/BaseView";
-import { Text } from "../../modules/gameobjects/ui/Text";
-import { CONFIG, FontListKey } from "../../info/GameInfo";
 import { Image } from "../../modules/gameobjects/Image";
 import { Assets } from "../../library/AssetTitle";
 
