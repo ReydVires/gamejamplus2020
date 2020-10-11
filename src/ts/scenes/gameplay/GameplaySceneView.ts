@@ -36,7 +36,7 @@ export class GameplaySceneView implements BaseView {
 			color: 'black',
 			fontFamily: FontListKey.ROBOTO,
 		};
-		const restartBtn = new Button(this._scene, 100, 64 * displayPercentage, "Restart", restartStyleBtn, {
+		const restartBtn = new Button(this._scene, 100, 100 * displayPercentage, "Restart", restartStyleBtn, {
 			fill: 0xfafafa,
 			alpha: 1,
 			height: 64,
@@ -44,6 +44,7 @@ export class GameplaySceneView implements BaseView {
 		});
 		restartBtn.transform.setToScaleDisplaySize(displayPercentage * 1.5);
 		restartBtn.labelText.gameObject.setFontSize(32 * restartBtn.transform.displayToOriginalHeightRatio);
+		restartBtn.container.setScrollFactor(0);
 		restartBtn.click.once(() => {
 			this.event.emit(this.eventName.onSFXClick);
 			const scene = this._scene.scene;
@@ -78,16 +79,16 @@ export class GameplaySceneView implements BaseView {
 
 	private createHUD (displayPercentage: number, slimePoint: number): void {
 		const slimePointHolder = new Image(this._scene, this.screenUtility.width * 0.97, 100 * displayPercentage, Assets.slime_holder.key);
-		slimePointHolder.transform.setToScaleDisplaySize(displayPercentage * 1.5);
-		slimePointHolder.gameObject.setOrigin(1, 0.5);
+		slimePointHolder.transform.setToScaleDisplaySize(displayPercentage);
+		slimePointHolder.gameObject.setOrigin(1, 0.5).setScrollFactor(0);
 
-		const slimePointPosText = slimePointHolder.transform.getDisplayPositionFromCoordinate(0.35, 0.5);
+		const slimePointPosText = slimePointHolder.transform.getDisplayPositionFromCoordinate(0.315, 0.5);
 		this.slimePointText = new Text(this._scene, slimePointPosText.x, slimePointPosText.y, slimePoint.toString(), {
 			fontFamily: FontListKey.ROBOTO,
-			fontSize: `${32 * slimePointHolder.transform.displayToOriginalHeightRatio}px`,
+			fontSize: `${45 * slimePointHolder.transform.displayToOriginalHeightRatio}px`,
 			align: 'right'
 		});
-		this.slimePointText.gameObject.setOrigin(1, 0.5);
+		this.slimePointText.gameObject.setOrigin(1, 0.5).setScrollFactor(0);
 	}
 
 	update (time: number, dt: number): void {
