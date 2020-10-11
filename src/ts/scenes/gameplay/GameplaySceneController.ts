@@ -1,6 +1,7 @@
 import { AudioController } from "../../modules/audio/AudioController";
 import { SceneListKey } from "../../info/GameInfo";
 import { Assets as Audio } from "../../library/AssetGameplay";
+import { Assets as AudioTitle } from "../../library/AssetTitle";
 import { BaseSceneController } from "../../modules/core/BaseSceneController";
 import { GameplaySceneView } from "./GameplaySceneView";
 import { SlimeController } from "./slime/SlimeController";
@@ -34,8 +35,10 @@ export class GameplaySceneController extends BaseSceneController {
 		this.checkPointController = new CheckPointController(this);
 		this.slimeController = new SlimeController(this);
 
-		this.obstacleController.onClick((id) => {
-			console.log("obstacleController::", id);
+		this.obstacleController.onClick((id, data) => {
+			this.audioController.playSFX(Audio.sfx_click.key);
+			console.log("obstacleController::", id, data);
+			data.setVisible(true);
 			const obstaclesData = this.gameController.obstacles;
 			for (const key in obstaclesData) {
 				if (!Reflect.has(obstaclesData, key)) continue;
@@ -46,10 +49,12 @@ export class GameplaySceneController extends BaseSceneController {
 			}
 		});
 		this.checkPointController.onClickConfirm((target) => {
+			this.audioController.playSFX(AudioTitle.sfx_click_confirm.key);
 			console.log("checkPointController.onClickConfirm::", target.key);
 			this.slimeController.setPosition(target.value.x, target.value.y);
 		});
 		this.checkPointController.onClick((id) => {
+			this.audioController.playSFX(Audio.sfx_click.key);
 			console.log("checkPointController.onClick::", id);
 		});
 
@@ -67,14 +72,20 @@ export class GameplaySceneController extends BaseSceneController {
 
 		this.onSFXClick(() => this.audioController.playSFX(Audio.sfx_click.key));
 		this.onCreateFinish(() => {
+			this.onSFXCancelTool(() => this.audioController.playSFX(Audio.sfx_cancel.key));
+			this.onSFXClickTool(() => this.audioController.playSFX(Audio.sfx_click.key));
 			this.onClickTool((name, cost) => {
-				console.log("onClickTool::", name, cost);
+				if (!this.gameController.subtractSlimePoint(cost)) return;
+				this.view.updateSlimePoint(this.gameController.slimePoint);
 			});
 		});
 	}
 
 	create (): void {
-		this.view.create(this.backgroundController.getDisplayPercentage());
+		this.view.create(
+			this.backgroundController.getDisplayPercentage(),
+			this.gameController.slimePoint
+		);
 	}
 
 	update (time: number, dt: number): void {
@@ -83,6 +94,14 @@ export class GameplaySceneController extends BaseSceneController {
 
 	onClickTool (events: typeof OnClickTool): void {
 		this.view.tool.event.on(this.view.tool.eventName.onClickTool, events);
+	}
+
+	onSFXClickTool (events: Function): void {
+		this.view.tool.event.on(this.view.tool.eventName.onSFXClickTool, events);
+	}
+
+	onSFXCancelTool (events: Function): void {
+		this.view.tool.event.on(this.view.tool.eventName.onSFXCancelTool, events);
 	}
 
 	onSFXClick (events: Function): void {
